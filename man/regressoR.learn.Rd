@@ -74,6 +74,7 @@ The return value of this method will be an instance of
 result.
 }
 \examples{
+\dontrun{
 dx <- rnorm(100);
 dy <- rnorm(n=100, mean=50*dx*dx-33);
 plot(dx, dy)
@@ -85,4 +86,5 @@ result@quality
 # [1] 0.2455075
 dx.sorted <- sort(dx)
 lines(dx.sorted, result@f(dx.sorted), col="red")
+}
 }
