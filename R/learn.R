@@ -31,7 +31,7 @@
 #' and \code{y} and returns an instance of
 #' \code{\link{RegressionQualityMetric}}. It will be used to generate the
 #' quality metrics for guiding the model fitters. Since we internally use the
-#' \code{\link{learning.learn}} method from the \code{learnerSelectoR}
+#' \code{learning.learn} method from the \code{learnerSelectoR}
 #' package, the model may be chosen based on cross-validation and the metric
 #' generator is then also used to generate quality metrics for the training
 #' and test datasets used internally. If nothing else is specified, we use
