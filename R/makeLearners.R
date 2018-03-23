@@ -6,6 +6,6 @@
 #' @description Create the list of default learners for the use in
 #'   \code{\link{regressoR.applyLearners}}.
 #' @return a list of regression learners that can be applied.
-#' @export FunctionalModel.makeLearners
+#' @export regressoR.makeLearners
 #' @importFrom regressoR.functional FunctionalModel.makeLearners
 regressoR.makeLearners <- function() .allLearners
