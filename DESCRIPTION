@@ -1,7 +1,7 @@
 Package: regressoR
 Type: Package
 Title: An R Package for Fitting Models to 2-Dimensional (x-y) Data
-Version: 0.8.0
+Version: 0.8.1
 Author: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Maintainer: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Description: This package joins the different regression methodologies
@@ -14,7 +14,7 @@ URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
 Imports: dataTransformeR (>= 0.8.7),
          regressoR.base (>= 0.8.2),
-         regressoR.functional (>= 0.8.1),
+         regressoR.functional (>= 0.8.2),
          regressoR.quality (>= 0.8.2)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)
