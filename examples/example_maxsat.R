@@ -82,7 +82,7 @@ learners <- lapply(X=learners.orig, FUN=function(learner) {
                   cat("null, time=", sep="");
                 } else {
                   cat(result@model@name, "@", result@quality, ", time=", sep="");
-                  lines(data.x, result@f(data.x), col=colors[[L]], log="x");
+                  lines(data.x, result@f(data.x), col=colors[[L]]);
                 }
                 cat(time, "\n", sep="")
               };
