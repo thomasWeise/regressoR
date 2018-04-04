@@ -12,10 +12,10 @@ Encoding: UTF-8
 LazyData: true
 URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
-Imports: dataTransformeR (>= 0.8.7),
-         regressoR.base (>= 0.8.2),
-         regressoR.functional (>= 0.8.2),
-         regressoR.quality (>= 0.8.2)
+Imports: dataTransformeR (>= 0.8.8),
+         regressoR.base (>= 0.8.3),
+         regressoR.functional (>= 0.8.3),
+         regressoR.quality (>= 0.8.4)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)
 Remotes: github::thomasWeise/dataTransformeR,
