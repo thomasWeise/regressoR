@@ -84,12 +84,23 @@ learners <- lapply(X=learners.orig, FUN=function(learner) {
                   cat(result@model@name, "@", result@quality, ", time=", sep="");
                   lines(data.x, result@f(data.x), col=colors[[L]]);
                 }
-                cat(time, "\n", sep="")
+                cat(time, "\n", sep="");
+                return(result);
               };
               wrapped <- force(wrapped);
               return(wrapped); });
 
+totalTime <- system.time(
 result <- regressoR.learn(x=data.x,
                           y=data.y,
                           learners=learners)
-result
+)[3];
+cat("Total Time: ", totalTime, "s\n", sep="");
+
+
+plot(data.x, data.y, log="x");
+lines(data.x, result@f(data.x), col="red");
+cat("    quality: ",result@quality, "\n", sep="");
+cat("      model: ", result@model@name, "\n", sep="");
+cat("x-transform: ", function.to.string(result@transform.x), "\n", sep="");
+cat("y-transform: ", function.to.string(result@transform.y), "\n", sep="");
