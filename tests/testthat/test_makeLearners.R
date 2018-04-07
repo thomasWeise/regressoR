@@ -16,7 +16,7 @@ test_that("Test regressoR.makeLearners()", {
 
   for(learner in learners) {
     expect_true(is.function(learner));
-    result <- learner(metric, NULL, NULL, NULL);
+    result <- learner(metric, NULL, NULL, NULL, q=0.76);
     expect_true(!is.null(result));
     expect_is(result, "FittedFunctionalModel");
     validObject(result);
