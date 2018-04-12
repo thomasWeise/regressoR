@@ -41,14 +41,14 @@
 #' @param cores the number of cores to use (\code{>1L} leads to parallel
 #'   execution)
 #' @param logging should progress information be printed
-#' @export regressor.batchLearn
+#' @export regressoR.batchLearn
 #' @importFrom utilizeR path.batchProcessor path.batchApply path.extensionRegExp
 #' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @importFrom regressoR.quality RegressionQualityMetric.default
 #' @importFrom data.table rbindlist
 #' @seealso regressoR.learnForExport
 #' @seealso regressoR.loadResult
-regressor.batchLearn <- function(source=getwd(),
+regressoR.batchLearn <- function(source=getwd(),
                                  destination=file.path(source, "../models"),
                                  loader=function(file) read.csv(file, sep="\t")[c(1,2)],
                                  selector=path.extensionRegExp("txt"),
