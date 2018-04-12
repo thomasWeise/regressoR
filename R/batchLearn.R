@@ -70,16 +70,19 @@ regressoR.batchLearn <- function(source=getwd(),
   learn.all <- force(learn.all);
 
   if(learn.single || learn.all) {
+    # we only get busy if there is something to learn
 
+    # first canonicalize the source path
     source <- force(source);
     source <- normalizePath(source);
-    source <- force(source);
 
+    # wethen we also canonicalize the destination path and ensure that the
+    # destination folder exists
     destination <- force(destination);
     dir.create(path=destination, showWarnings = FALSE, recursive = TRUE);
     destination <- normalizePath(destination);
-    destination <- force(destination);
 
+    # we enforce that all parameters exist
     loader <- force(loader);
     selector <- force(selector);
     check.directory <- force(check.directory);
@@ -93,16 +96,19 @@ regressoR.batchLearn <- function(source=getwd(),
     cores <- force(cores);
     logging <- force(logging);
 
-    # Construct the modeller, a function which loads all files from "src", learns a model, and stores the result in "dst".
-    modeller <- function(src, dst) {
+    # Construct the modeler, a function which loads all files from "src",
+    # learns a model, and stores the result in "dst".
+    modeler <- function(src, dst) {
       src <- force(src);
       dst <- force(dst);
       logging <- force(logging);
 
       if(logging) {
-        print(paste(Sys.time(), ": beginning to regression-model ", length(src), " files to ", dst, ".", sep="", collapse=""));
+        print(paste(Sys.time(), ": beginning to regression-model ", length(src),
+                    " files to ", dst, ".", sep="", collapse=""));
       }
 
+      # enforce that all necessary parameters exist in the current scope
       loader <- force(loader);
       learners <- force(learners);
       representations <- force(representations);
@@ -110,15 +116,23 @@ regressoR.batchLearn <- function(source=getwd(),
       q <- force(q);
       includeMetric <- force(includeMetric);
 
+      # load the data as n*2 matrix and remove all names
       if(length(src) > 1L) {
+        # if there are multiple sources, load all of them and patch them
+        # together: every loaded data is supposed to be a two-column matrix and
+        # we attach the matrices to each other one under the other
         data <- rbindlist(l=unname(lapply(X=src, FUN=function(file) unname(loader(file)))),
                            use.names=FALSE, idcol=NULL);
       } else {
+        # we load a single file
         data <- unname(loader(src[[1L]]));
       }
 
+      # extract the x and y data from the matrix
       data.x <- as.vector(unname(unlist(data[,1L])));
-      data.y <- as.vector(unname(unlist(data[,2])));
+      data.y <- as.vector(unname(unlist(data[,2L])));
+
+      # start the actual learning process
       result <- regressoR.learnForExport(x=data.x,
                                          y=data.y,
                                          learners=learners,
@@ -126,9 +140,9 @@ regressoR.batchLearn <- function(source=getwd(),
                                          metricGenerator=metricGenerator,
                                          q=q,
                                          includeMetric=includeMetric);
-
       result <- force(result);
 
+      # store the result list in the output file
       saveRDS(object=result, file=dst);
 
       # print log output
@@ -143,46 +157,56 @@ regressoR.batchLearn <- function(source=getwd(),
                     r, " to ", dst, ".", sep="", collapse=""));
       }
     };
-    modeller <- force(modeller);
+    modeler <- force(modeler);
 
-    # create the single modeler
+    # create the single modeler, i.e., a wrapped batch processor which applies
+    # "modeler" to each single acceptable input file
     if(learn.single) {
-      proc.single <- path.batchProcessor(processor=modeller,
+      # create the batch processor receiving input/output paths
+      proc.single <- path.batchProcessor(processor=modeler,
                                          dest=destination,
                                          suffix=suffix.single);
       proc.single <- force(proc.single);
+      # assign it to the regular expression for processors
       file.single <- new.env();
       assign(x=selector, value=proc.single, envir=file.single);
       file.single <- force(file.single);
-    } else {
+    } else { # no single-file processors
       file.single <- NULL;
     }
 
-    # create the multi-modeller
+    # create the single modeler, i.e., a wrapped batch processor which applies
+    # "modeler" to all acceptable input files of a folder
     if(learn.all) {
-      proc.all <- path.batchProcessor(processor=modeller,
+      # create the batch processor receiving input/output paths
+      proc.all <- path.batchProcessor(processor=modeler,
                                       dest=destination,
                                       suffix=suffix.all);
       proc.all <- force(proc.all);
+      # assign it to the regular expression for processors
       file.all <- new.env();
       assign(x=selector, value=proc.all, envir=file.all);
       file.all <- force(file.all);
-    } else {
+    } else { # no single-file processors
       file.all <- NULL;
     }
 
     if(logging) {
+      # log that we start working now
       print(paste("Beginning regression-modelling from '", source,
                   "' to '", destination, "' using ", cores,
                   " cores.", sep="", collapse=""));
     }
 
+    # defering control to the directory walker and processor invocation engine
+    # which will dispatch the matching paths to the processors, which in turn
+    # will invoke the modeler
     path.batchApply(path = source, file.single = file.single,
                     file.in.folder = file.all,
                     check.directory = check.directory,
                     cores = cores);
 
-    if(logging) {
+    if(logging) { # yeah, we are done
       print(paste("Finished regression-modelling from '", source,
                   "' to '", destination, "' using ", cores,
                   " cores.", sep="", collapse=""));
