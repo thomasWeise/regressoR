@@ -1,8 +1,6 @@
 library("regressoR")
 context("regressoR.learnForExport")
 
-slow.tests <- (is.na(Sys.getenv("TRAVIS", unset=NA)))
-
 .check <- funcion(result) {
   expect_true(!(is.null(result)));
   expect_true(is.list(result));
@@ -15,6 +13,8 @@ slow.tests <- (is.na(Sys.getenv("TRAVIS", unset=NA)))
     expect_identical(result$metric@quality(result$f), result$quality);
   }
 }
+
+slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
 
 test_that("Test regressoR.learnForExport I", {
   if(slow.tests) {

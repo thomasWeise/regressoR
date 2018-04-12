@@ -76,7 +76,7 @@ regressoR.batchLearn <- function(source=getwd(),
 
     destination <- force(destination);
     dir.create(path=destination, showWarnings = FALSE, recursive = TRUE);
-    destination <- normalizePath(dest);
+    destination <- normalizePath(destination);
     destination <- force(destination);
 
     loader <- force(loader);
