@@ -12,17 +12,23 @@ Encoding: UTF-8
 LazyData: true
 URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
-Imports: dataTransformeR (>= 0.8.9),
+Imports: data.table (>= 1.10.4.3),
+         dataTransformeR (>= 0.8.10),
          regressoR.base (>= 0.8.4),
-         regressoR.functional (>= 0.8.5),
-         regressoR.quality (>= 0.8.4)
+         regressoR.functional (>= 0.8.7),
+         regressoR.quality (>= 0.8.4),
+         utilizeR (>= 0.8.1)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)
 Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/regressoR.base,
          github::thomasWeise/regressoR.functional,
-         github::thomasWeise/regressoR.quality
+         github::thomasWeise/regressoR.quality,
+         github::thomasWeise/utilizeR
 Collate: 
+    'learnForExport.R'
+    'batchLearn.R'
     'makeLearners.R'
     'learn.R'
+    'loadResult.R'
 RoxygenNote: 6.0.1.9000

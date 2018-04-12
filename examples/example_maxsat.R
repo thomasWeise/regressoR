@@ -55,11 +55,11 @@ while(length(colors) < count) {
 if(length(colors) > count) { colors <- colors[1:count]; }
 # OK, now we have exacty the right number of colors
 
-learners <- lapply(X=learners.orig, FUN=function(learner) {
+learners <- lapply(X=learners.orig, FUN=function(learner, q) {
               learner <- force(learner);
-              wrapped <-  function(metric, transformation.x, transformation.y, metric.transformed) {
+              wrapped <-  function(metric, transformation.x, transformation.y, metric.transformed, q) {
                 time <- system.time(
-                   result <- learner(metric, transformation.x, transformation.y, metric.transformed))[3];
+                   result <- learner(metric, transformation.x, transformation.y, metric.transformed, q))[3];
 
                 L <- 0L;
                 for(learner2 in learners.orig) {
@@ -67,7 +67,7 @@ learners <- lapply(X=learners.orig, FUN=function(learner) {
                   if(identical(learner, learner2)) { break; }
                 }
 
-                cat("learner ", L, ", n=", length(metric@x), ", tx=", sep="");
+                cat("learner ", L, ", q=", q, ", n=", length(metric@x), ", tx=", sep="");
                 if(is.null(transformation.x)) {
                   cat("null, ty=", sep="");
                 } else {
@@ -93,7 +93,7 @@ learners <- lapply(X=learners.orig, FUN=function(learner) {
 totalTime <- system.time(
 result <- regressoR.learn(x=data.x,
                           y=data.y,
-                          learners=learners)
+                          learners=learners, q=0.77)
 )[3];
 cat("Total Time: ", totalTime, "s\n", sep="");
 

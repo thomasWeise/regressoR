@@ -55,7 +55,6 @@
 #' @param metricGenerator the metric generator function
 #' @param q the effort parameter: 0=minimum effort=fast/low quality, 1=maximum
 #'   effort=slow=highest quality
-#' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @return an instance of \code{\link{FittedModel}} which represents the
 #'   relationship between the \code{x} and \code{y} values
 #' @export regressoR.learn
