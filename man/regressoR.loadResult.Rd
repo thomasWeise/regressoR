@@ -14,7 +14,9 @@ the loaded result
 }
 \description{
 Open a file \code{file} produced by
-  \code{\link{regressoR.batchLearn}} and return the stored result.
+  \code{\link{regressoR.batchLearn}} and return the stored result. The result
+  is a list generated according by the definition given in
+  \code{\link{regressoR.learnForExport}}.
 }
 \seealso{
 regressoR.batchLearn

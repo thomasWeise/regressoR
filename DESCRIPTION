@@ -6,7 +6,7 @@ Author: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Maintainer: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Description: This package joins the different regression methodologies
     developed in our regressoR.* packages together and provides them
-    through a simple interface
+    through a simple interface.
 License: LGPL-3
 Encoding: UTF-8
 LazyData: true
@@ -17,6 +17,7 @@ Imports: data.table (>= 1.10.4.3),
          regressoR.base (>= 0.8.4),
          regressoR.functional (>= 0.8.7),
          regressoR.quality (>= 0.8.4),
+         utils (>= 3.3.2),
          utilizeR (>= 0.8.1)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)

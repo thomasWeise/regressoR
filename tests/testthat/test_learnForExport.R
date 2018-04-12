@@ -1,7 +1,7 @@
 library("regressoR")
 context("regressoR.learnForExport")
 
-.check <- funcion(result) {
+.check <- function(result) {
   expect_true(!(is.null(result)));
   expect_true(is.list(result));
   expect_true(is.function(result$f));

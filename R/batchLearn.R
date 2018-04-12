@@ -3,14 +3,14 @@
 #' @title Apply the Regression Learning to a Directory of Data and Store the
 #'   Fitted Models in another Directory
 #' @description Recursively, a \code{source} directory is traversed and all
-#'   files matching to a \code{selector} regular expression are picked up,
-#'   loaded with a \code{loader}, and then modelled by the regressor. The
-#'   resulting models are stored in a \code{destination} folder in a structure
-#'   mirroring the source folder.
+#' files matching to a \code{selector} regular expression are picked up,
+#' loaded with a \code{loader}, and then modelled by the regressor. The
+#' resulting models are stored in a \code{destination} folder in a structure
+#' mirroring the source folder.
 #'
-#'   This method uses \code{\link{regressoR.learnForExport}} to learn the models
-#'   and stores them into files using \code{\link{saveRDS}} to store them. They
-#'   can later be read using \code{\link{regressoR.loadResult}}.
+#' This method uses \code{\link{regressoR.learnForExport}} to learn the models
+#' and stores them into files using \code{\link{saveRDS}} to store them. They
+#' can later be read using \code{\link{regressoR.loadResult}}.
 #'
 #' @param source the source directory, which is recursively searched for files
 #'   with data to be modeled
@@ -46,6 +46,7 @@
 #' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @importFrom regressoR.quality RegressionQualityMetric.default
 #' @importFrom data.table rbindlist
+#' @importFrom utils read.csv
 #' @seealso regressoR.learnForExport
 #' @seealso regressoR.loadResult
 regressoR.batchLearn <- function(source=getwd(),

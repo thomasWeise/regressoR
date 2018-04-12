@@ -11,5 +11,7 @@ a list of regression learners that can be applied.
 }
 \description{
 Create the list of default learners for the use in
-  \code{\link{regressoR.applyLearners}}.
+  \code{\link{regressoR.applyLearners}}. Currently, these are the learners
+  obtained by
+  \code{\link[regressoR.functional]{FunctionalModel.makeLearners}()}.
 }

@@ -64,14 +64,14 @@ execution)}
 }
 \description{
 Recursively, a \code{source} directory is traversed and all
-  files matching to a \code{selector} regular expression are picked up,
-  loaded with a \code{loader}, and then modelled by the regressor. The
-  resulting models are stored in a \code{destination} folder in a structure
-  mirroring the source folder.
+files matching to a \code{selector} regular expression are picked up,
+loaded with a \code{loader}, and then modelled by the regressor. The
+resulting models are stored in a \code{destination} folder in a structure
+mirroring the source folder.
 
-  This method uses \code{\link{regressoR.learnForExport}} to learn the models
-  and stores them into files using \code{\link{saveRDS}} to store them. They
-  can later be read using \code{\link{regressoR.loadResult}}.
+This method uses \code{\link{regressoR.learnForExport}} to learn the models
+and stores them into files using \code{\link{saveRDS}} to store them. They
+can later be read using \code{\link{regressoR.loadResult}}.
 }
 \seealso{
 regressoR.learnForExport
