@@ -14,7 +14,8 @@ regressoR.batchLearn(source = getwd(), destination = file.path(source,
   TRUE), metricGenerator = regressoR.quality::RegressionQualityMetric.default,
   suffix.single = ".model", suffix.all = paste("all", suffix.single, sep =
   "", collapse = ""), q = 0.75, includeMetric = TRUE, cores = 1L,
-  logging = TRUE)
+  logging = if (cores <= 1L) {     TRUE } else {     file.path(destination,
+  "log.txt") })
 }
 \arguments{
 \item{source}{the source directory, which is recursively searched for files
@@ -60,7 +61,9 @@ files}
 \item{cores}{the number of cores to use (\code{>1L} leads to parallel
 execution)}
 
-\item{logging}{should progress information be printed}
+\item{logging}{should progress information be printed: either \code{TRUE} for
+printing to the console via \code{\link{print}}, \code{FALSE} for no
+logging, or a path to a file receiving logging information}
 }
 \description{
 Recursively, a \code{source} directory is traversed and all
