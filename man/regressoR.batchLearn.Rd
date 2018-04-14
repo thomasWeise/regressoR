@@ -12,10 +12,9 @@ regressoR.batchLearn(source = getwd(), destination = file.path(source,
   learners = regressoR.makeLearners(), representations = function(x, y)
   dataTransformeR::Transformation.applyDefault2D(x = x, y = y, addIdentity =
   TRUE), metricGenerator = regressoR.quality::RegressionQualityMetric.default,
-  suffix.single = ".model", suffix.all = paste("all", suffix.single, sep =
-  "", collapse = ""), q = 0.75, includeMetric = TRUE, cores = 1L,
-  logging = if (cores <= 1L) {     TRUE } else {     file.path(destination,
-  "log.txt") })
+  suffix.single = "_single.model", suffix.all = "_all.model", q = 0.75,
+  includeMetric = TRUE, cores = 1L, logging = if (cores <= 1L) {     TRUE
+  } else {     file.path(destination, "log.txt") })
 }
 \arguments{
 \item{source}{the source directory, which is recursively searched for files
