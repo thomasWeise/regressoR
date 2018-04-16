@@ -14,6 +14,7 @@ URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
 Imports: data.table (>= 1.10.4.3),
          dataTransformeR (>= 0.8.10),
+         methods (>= 3.3.2),
          regressoR.base (>= 0.8.4),
          regressoR.functional (>= 0.8.7),
          regressoR.quality (>= 0.8.4),
