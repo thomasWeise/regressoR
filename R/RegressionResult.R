@@ -39,7 +39,9 @@ RegressionResult <- setClass(
       }
     } else{
       validObject(object@result);
-      return("If result is not NULL, then the name property must be non-empty string.");
+      if(is.null(object@name)) {
+        return("If result is not NULL, then the name property must be non-empty string.");
+      }
     }
 
     return(TRUE);
