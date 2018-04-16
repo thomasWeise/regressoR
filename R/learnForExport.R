@@ -1,8 +1,9 @@
 #' @title Learn a Model for Export
 #' @description A version of the \code{\link{regressoR.learn}} function which
-#'   prepares the result as a list by stripping down all but the essential
-#'   information (and potentially storing the original quality metric
-#'   in the list). The returned list is suitable for export into a file.
+#'   prepares the result as instance of \code{\link{RegressionResult}} by
+#'   stripping down all but the essential information (and potentially storing
+#'   the original quality metric). The returned list is suitable for export into
+#'   a file and import via batch processing.
 #' @param x the \code{x} coordinates, i.e., the input values
 #' @param y the \code{y} coordinates, i.e., the output values
 #' @param learners the learners to apply
@@ -13,14 +14,14 @@
 #'   effort=slow=highest quality
 #' @param includeMetric should be the quality function to rate models be stored
 #'   in the list as well?
-#' @return a list with the fields \code{f}, \code{size}, \code{quality},
-#'   \code{name}, \code{time}, and \code{metric}.
+#' @return an instance of \code{\link{RegressionResult}}
 #' @export regressoR.learnForExport
 #' @importFrom regressoR.base regressoR.applyLearners
 #' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @importFrom regressoR.quality RegressionQualityMetric.default
 #' @seealso regressoR.batchLearn
-regressoR.learnForExport <- function(x, y, learners = regressoR.makeLearners(),
+regressoR.learnForExport <- function(x, y,
+                              learners = regressoR.makeLearners(),
                               representations=dataTransformeR::Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
                               metricGenerator=regressoR.quality::RegressionQualityMetric.default,
                               q=0.75,
@@ -34,31 +35,18 @@ regressoR.learnForExport <- function(x, y, learners = regressoR.makeLearners(),
                               q=q)
   )[3]);
 
-  if(is.null(result)) { return(list(time=time)); }
 
-  f <- result@f;
-  f <- force(f);
-  quality <- result@quality;
-  quality <- force(quality);
-  size <- result@size;
-  size <- force(size);
-  name <- as.character(result);
-  name <- force(name);
+  return(RegressionResult.new(time=time,
+                              result=result,
+                              metric=(if(includeMetric) {
+                                metricGenerator(x, y)
+                              } else { NULL })));
 
-
-  if(includeMetric) {
-    metric <- metricGenerator(x, y)
-  } else {
-    metric <- NULL;
-  }
-  metric <- force(metric);
-
-  result <- list( f=f,
-                  quality=quality,
-                  size=size,
-                  name=name,
-                  time=time,
-                  metric=metric);
+  result <- force(result);
+  result@result <- force(result@result);
+  result@metric <- force(result@metric);
+  result@time <- force(result@time);
+  result@name <- force(result@name);
   result <- force(result);
   return(result);
 }

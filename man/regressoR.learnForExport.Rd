@@ -29,14 +29,14 @@ effort=slow=highest quality}
 in the list as well?}
 }
 \value{
-a list with the fields \code{f}, \code{size}, \code{quality},
-  \code{name}, \code{time}, and \code{metric}.
+an instance of \code{\link{RegressionResult}}
 }
 \description{
 A version of the \code{\link{regressoR.learn}} function which
-  prepares the result as a list by stripping down all but the essential
-  information (and potentially storing the original quality metric
-  in the list). The returned list is suitable for export into a file.
+  prepares the result as instance of \code{\link{RegressionResult}} by
+  stripping down all but the essential information (and potentially storing
+  the original quality metric). The returned list is suitable for export into
+  a file and import via batch processing.
 }
 \seealso{
 regressoR.batchLearn

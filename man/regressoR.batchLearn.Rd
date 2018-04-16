@@ -14,7 +14,8 @@ regressoR.batchLearn(source = getwd(), destination = file.path(source,
   TRUE), metricGenerator = regressoR.quality::RegressionQualityMetric.default,
   suffix.single = "_single.model", suffix.all = "_all.model", q = 0.75,
   includeMetric = TRUE, cores = 1L, logging = if (cores <= 1L) {     TRUE
-  } else {     file.path(destination, "log.txt") })
+  } else {     file.path(destination, "log.txt") }, returnResults = FALSE,
+  skipExisting = (!returnResults))
 }
 \arguments{
 \item{source}{the source directory, which is recursively searched for files
@@ -63,6 +64,11 @@ execution)}
 \item{logging}{should progress information be printed: either \code{TRUE} for
 printing to the console via \code{\link{print}}, \code{FALSE} for no
 logging, or a path to a file receiving logging information}
+
+\item{returnResults}{should we return the computed results or not?}
+
+\item{skipExisting}{should already existing models (resulting from a
+previous, incomplete execution) simply be skipped or overwritting}
 }
 \description{
 Recursively, a \code{source} directory is traversed and all

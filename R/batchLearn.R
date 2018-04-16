@@ -43,6 +43,9 @@
 #' @param logging should progress information be printed: either \code{TRUE} for
 #'   printing to the console via \code{\link{print}}, \code{FALSE} for no
 #'   logging, or a path to a file receiving logging information
+#' @param returnResults should we return the computed results or not?
+#' @param skipExisting should already existing models (resulting from a
+#'   previous, incomplete execution) simply be skipped or overwritting
 #' @export regressoR.batchLearn
 #' @importFrom utilizeR path.batchProcessor path.batchApply path.extensionRegExp
 #' @importFrom dataTransformeR Transformation.applyDefault2D
@@ -66,7 +69,9 @@ regressoR.batchLearn <- function(source=getwd(),
                                  q=0.75,
                                  includeMetric=TRUE,
                                  cores=1L,
-                                 logging=if(cores <= 1L) { TRUE } else { file.path(destination, "log.txt"); }) {
+                                 logging=if(cores <= 1L) { TRUE } else { file.path(destination, "log.txt"); },
+                                 returnResults=FALSE,
+                                 skipExisting=(!returnResults)) {
 
   learn.single <- force(learn.single);
   learn.all <- force(learn.all);
@@ -194,6 +199,11 @@ regressoR.batchLearn <- function(source=getwd(),
         logger(paste(Sys.time(), ": finished to regression-model ", length(src), " files resulting in ",
                     r, " to ", dst, ".", sep="", collapse=""));
       }
+
+      if(returnResults) {
+        return(result);
+      }
+      return(NULL);
     };
     modeler <- force(modeler);
 
@@ -203,7 +213,8 @@ regressoR.batchLearn <- function(source=getwd(),
       # create the batch processor receiving input/output paths
       proc.single <- path.batchProcessor(processor=modeler,
                                          dest=destination,
-                                         suffix=suffix.single);
+                                         suffix=suffix.single,
+                                         skipExisting=skipExisting);
       proc.single <- force(proc.single);
       # assign it to the regular expression for processors
       file.single <- new.env();
@@ -219,7 +230,8 @@ regressoR.batchLearn <- function(source=getwd(),
       # create the batch processor receiving input/output paths
       proc.all <- path.batchProcessor(processor=modeler,
                                       dest=destination,
-                                      suffix=suffix.all);
+                                      suffix=suffix.all,
+                                      skipExisting=skipExisting);
       proc.all <- force(proc.all);
       # assign it to the regular expression for processors
       file.all <- new.env();

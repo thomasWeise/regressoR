@@ -27,6 +27,7 @@ Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/regressoR.quality,
          github::thomasWeise/utilizeR
 Collate: 
+    'RegressionResult.R'
     'learnForExport.R'
     'batchLearn.R'
     'makeLearners.R'
