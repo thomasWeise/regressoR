@@ -24,6 +24,10 @@ vector of name components to actually use (by default, identity mapping)}
 followed or not}
 
 \item{cores}{the number of cores to be used for loading}
+
+\item{logging}{should progress information be printed: either \code{TRUE} for
+printing to the console via \code{\link{print}}, \code{FALSE} for no
+logging, or a path to a file receiving logging information}
 }
 \value{
 a list of \code{\link{RegressionResults}} instances

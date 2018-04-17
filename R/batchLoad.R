@@ -12,6 +12,9 @@
 #' @param check.directory a function which can choose if a directory should be
 #'   followed or not
 #' @param cores the number of cores to be used for loading
+#' @param logging should progress information be printed: either \code{TRUE} for
+#'   printing to the console via \code{\link{print}}, \code{FALSE} for no
+#'   logging, or a path to a file receiving logging information
 #' @return a list of \code{\link{RegressionResults}} instances
 #' @importFrom utilizeR path.batchApply path.extensionRegExp
 #' @export regressoR.batchLoad
