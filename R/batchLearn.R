@@ -190,11 +190,10 @@ regressoR.batchLearn <- function(source=getwd(),
 
       # print log output
       if(!is.null(logger)) {
-        r <- result$quality;
-        if(is.null(q)) {
+        if(is.null(result@result)) {
           r <- "failure";
         } else {
-          r <- paste("a model of type ", result$name, " at quality ", result$q, sep="", collapse="");
+          r <- paste("a model of type ", result@name, " at quality ", result@result@quality, sep="", collapse="");
         }
         logger(paste(Sys.time(), ": finished to regression-model ", length(src), " files resulting in ",
                     r, " to ", dst, ".", sep="", collapse=""));
@@ -251,16 +250,21 @@ regressoR.batchLearn <- function(source=getwd(),
     # defering control to the directory walker and processor invocation engine
     # which will dispatch the matching paths to the processors, which in turn
     # will invoke the modeler
-    path.batchApply(path = source, file.single = file.single,
-                    file.in.folder = file.all,
-                    check.directory = check.directory,
-                    cores = cores);
+    result <- path.batchApply(path = source, file.single = file.single,
+                              file.in.folder = file.all,
+                              check.directory = check.directory,
+                              cores = cores);
+    if(!(returnResults)) {
+      result <- NULL;
+    }
 
     if(!is.null(logger)) { # yeah, we are done
       logger(paste("Finished regression-modelling from '", source,
                   "' to '", destination, "' using ", cores,
                   " cores.", sep="", collapse=""));
     }
+
+    return(result);
   }
 }
 

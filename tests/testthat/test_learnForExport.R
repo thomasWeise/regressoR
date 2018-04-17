@@ -3,13 +3,13 @@ context("regressoR.learnForExport")
 
 .check <- function(result) {
   expect_true(!(is.null(result)));
-  expect_instance(result, "RegressionResult");
+  expect_is(result, "RegressionResult");
   expect_true(is.function(result@result@f));
   expect_true(is.numeric(result@result@quality));
   expect_true(is.integer(result@result@size));
   expect_true(is.numeric(result@time));
   expect_true(is.character(result@name));
-  if(!(is.null(result$metric))) {
+  if(!(is.null(result@metric))) {
     expect_identical(result@metric@quality(result@result@f), result@result@quality);
   }
 }
