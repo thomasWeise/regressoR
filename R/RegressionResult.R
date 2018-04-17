@@ -1,3 +1,8 @@
+#' @importClassesFrom regressoR.base FittedModel
+setClassUnion("FittedModelOrNULL", c("FittedModel","NULL"))
+#' @importClassesFrom regressoR.quality RegressionQualityMetric
+setClassUnion("RegressionQualityMetricOrNULL", c("RegressionQualityMetric","NULL"))
+
 #' @title A Regression Result
 #' @description The regression result is a simple record which should include
 #'   the output of a regression process stripped from any non-needed additional
@@ -10,15 +15,15 @@
 #' @slot name the name of the fitted model
 #' @exportClass RegressionResult
 #' @importFrom methods setClass representation prototype validObject
-#' @importClassesFrom regressoR.base FittedModel
+#' @importClassesFrom utilizeR characterOrNULL
 #' @seealso RegressionResult.new
 RegressionResult <- setClass(
   Class = "RegressionResult",
   representation = representation(time="numeric",
-                                  result="FittedModel",
-                                  metric="RegressionQualityMetric",
-                                  name="character"),
-  prototype = prototype(result=NULL, metric=NULL),
+                                  result="FittedModelOrNULL",
+                                  metric="RegressionQualityMetricOrNULL",
+                                  name="characterOrNULL"),
+  prototype = prototype(result=NULL, metric=NULL, name=NULL),
   validity = function(object) {
 
     # time
