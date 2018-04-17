@@ -1,5 +1,5 @@
-library("modelDistBuildeR")
-context("modelDistBuildeR.RegressionResults")
+library("regressoR")
+context("regressoR.RegressionResults")
 
 library(regressoR)
 
