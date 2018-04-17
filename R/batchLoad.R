@@ -1,0 +1,108 @@
+
+
+#' @include RegressionResults.R
+#' @title Load the \code{\link{RegressionResults}}
+#' @description Load all the setup results from a folder structure.
+#' @param source the source folder
+#' @param selector the selector for the files
+#' @param check.directory a function which can choose if a directory should be
+#'   followed or not
+#' @param cores the number of cores to be used for loading
+#' @return a list of \code{\link{RegressionResults}} instances
+#' @importFrom utilizeR path.batchApply path.extensionRegExp
+#' @export regressoR.batchLoad
+#' @importFrom utilizeR path.relativize
+regressoR.batchLoad <- function(source=getwd(),
+                                selector=path.extensionRegExp(extensions="model", before.extension="_single"),
+                                namesProcessor=identity,
+                                check.directory=NULL,
+                                cores=1L,
+                                logging=if(cores <= 1L) { TRUE } else { file.path(destination, "log.txt"); }) {
+
+  source <- force(source);
+  source <- normalizePath(source);
+  source <- force(source);
+
+  # first we make the logger function useable
+  logging <- makeLogger(logging, cores);
+  logging <- force(logging);
+  if(!is.null(logging)) {
+    logging("Now loading learned models from ", source, ".");
+  }
+
+  namesProcessor <- force(namesProcessor);
+  check.directory <- force(check.directory);
+  cores <- force(cores);
+
+  # build the internal loader function
+  loader <- function(root, paths) {
+    root <- force(root);
+    paths <- force(paths);
+    namesProcessor <- force(namesProcessor);
+
+    # first, for each path load a result record
+    results <- unname(unlist(lapply(X=paths, FUN=function(path) {
+      # we only load records from files of non-zero size, because there might be
+      # some zero-sized files remaining either from crashed or still pending
+      # batch learning jobs
+      if(file.exists(path) && (file.size(path) > 0L)) {
+        return(regressoR.loadResult(path));
+      } else {
+        # ok, file is empty, no result
+        return(NULL);
+      }
+    }), recursive=TRUE));
+
+    # if there are no results for any of the files, let's simply stop here
+    if(is.null(results) || (length(results) <= 0L)) {
+      return(NULL);
+    }
+
+    # ok, we have results, so now we need to create the name vector
+    # each directory name is a name component
+    names <- unname(unlist(strsplit(
+             path.relativize(dirname(paths[1]), root), "/"),
+             recursive = TRUE));
+    if(is.null(names) || (length(names) <= 0L)) {
+      names <- "unnamed"; # if there are no names, use "unnamed"
+    }
+    # we apply the names processor, which might modify the names list
+    names <- unname(unlist(namesProcessor(names),
+                           recursive = TRUE));
+    if(is.null(names) || (length(names) <= 0L)) {
+      names <- "unnamed"; # if there are no names, use "unnamed"
+    }
+
+    # create and return the results record
+    result <- RegressionResults.new(names=names, results=results);
+    result <- force(result);
+    return(result);
+  }
+  loader <- force(loader);
+
+  # we now have a loader function ready
+  # assign the loader to the regular expression for processors
+  file.all <- new.env();
+  assign(x=selector, value=loader, envir=file.all);
+  file.all <- force(file.all);
+
+  # execute the batch process
+  results <- path.batchApply(path=source, file.single=NULL, file.in.folder=file.all,
+                             cores=cores, check.directory=check.directory,
+                             logging=logging);
+
+  # consolidate the result
+  results <- unname(unlist(results, recursive = TRUE));
+
+  if(!(is.null(logging))) {
+    # print the status message
+    logging("Finished loading models fitted to ", length(results), " setups.")
+  }
+
+  # canonicalize the result
+  if(is.null(results) || (length(results) <= 0L)) {
+    return(NULL);
+  }
+
+  return(results);
+}

@@ -10,9 +10,14 @@
 #' @return the loaded result
 #' @export regressoR.loadResult
 #' @seealso regressoR.batchLearn
-#' @seealso regressoR.batchLearn
+#' @importFrom methods validObject
 regressoR.loadResult <- function(file) {
   result <- readRDS(file=file);
   result <- force(result);
+  result@time <- force(result@time);
+  result@result <- force(result@result);
+  result@metric <- force(result@metric);
+  result <- force(result);
+  validObject(result);
   return(result);
 }

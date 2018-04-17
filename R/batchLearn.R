@@ -47,7 +47,7 @@
 #' @param skipExisting should already existing models (resulting from a
 #'   previous, incomplete execution) simply be skipped or overwritting
 #' @export regressoR.batchLearn
-#' @importFrom utilizeR path.batchProcessor path.batchApply path.extensionRegExp
+#' @importFrom utilizeR path.batchProcessor path.batchApply path.extensionRegExp makeLogger
 #' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @importFrom regressoR.quality RegressionQualityMetric.default
 #' @importFrom data.table rbindlist
@@ -84,41 +84,8 @@ regressoR.batchLearn <- function(source=getwd(),
     source <- normalizePath(source);
 
     # check and creat the logging destination
+    logging <- makeLogger(logging, cores);
     logging <- force(logging);
-    if(is.character(logging)) {
-      # logging is a path to a file, so we first try to normalize it
-      logging <- normalizePath(logging, mustWork = FALSE);
-      # and make sure the hosting directory exists
-      dir.create(path=dirname(logging), showWarnings = FALSE, recursive = TRUE);
-      # now we can make sure that the log file exists
-      file.create(logging, showWarnings = FALSE);
-      # which means that now we can really normalize the path
-      logging <- normalizePath(logging);
-      logging <- force(logging);
-
-      # the logger is now a function writing to the file
-      logger <- function(string) {
-        logging <- force(logging);
-        # open the file for appending text
-        con <- file(logging, "at");
-        # writing the text
-        writeLines(text=string, con=con);
-        # closing the file
-        close(con);
-      }
-    } else {
-      if(isTRUE(logging)) {
-        if(cores > 1L) {
-          warning(paste("Setting logging to TRUE with cores=",
-                        cores, " will may crash/fail in RStudio.",
-                        sep="", collapse=""))
-        }
-        logger <- print;
-      } else {
-        logger <- NULL;
-      }
-    }
-    logger <- force(logger);
 
     # wethen we also canonicalize the destination path and ensure that the
     # destination folder exists
@@ -144,11 +111,11 @@ regressoR.batchLearn <- function(source=getwd(),
     modeler <- function(src, dst) {
       src <- force(src);
       dst <- force(dst);
-      logger <- force(logger);
+      logging <- force(logging);
 
-      if(!is.null(logger)) {
-        logger(paste(Sys.time(), ": beginning to regression-model ", length(src),
-                    " files to ", dst, ".", sep="", collapse=""));
+      if(!is.null(logging)) {
+        logging("beginning to regression-model ", length(src),
+                " files to ", dst, ".");
       }
 
       # enforce that all necessary parameters exist in the current scope
@@ -189,14 +156,14 @@ regressoR.batchLearn <- function(source=getwd(),
       saveRDS(object=result, file=dst);
 
       # print log output
-      if(!is.null(logger)) {
+      if(!is.null(logging)) {
         if(is.null(result@result)) {
           r <- "failure";
         } else {
           r <- paste("a model of type ", result@name, " at quality ", result@result@quality, sep="", collapse="");
         }
-        logger(paste(Sys.time(), ": finished to regression-model ", length(src), " files resulting in ",
-                    r, " to ", dst, ".", sep="", collapse=""));
+        logging("finished to regression-model ", length(src), " files resulting in ",
+                r, " to ", dst, ".");
       }
 
       if(returnResults) {
@@ -240,11 +207,11 @@ regressoR.batchLearn <- function(source=getwd(),
       file.all <- NULL;
     }
 
-    if(!is.null(logger)) {
+    if(!is.null(logging)) {
       # log that we start working now
-      logger(paste("Beginning regression-modelling from '", source,
-                  "' to '", destination, "' using ", cores,
-                  " cores.", sep="", collapse=""));
+      logging("beginning regression-modelling from '", source,
+              "' to '", destination, "' using ", cores,
+              " cores.");
     }
 
     # defering control to the directory walker and processor invocation engine
@@ -253,15 +220,15 @@ regressoR.batchLearn <- function(source=getwd(),
     result <- path.batchApply(path = source, file.single = file.single,
                               file.in.folder = file.all,
                               check.directory = check.directory,
-                              cores = cores);
+                              cores = cores, logging = logging);
     if(!(returnResults)) {
       result <- NULL;
     }
 
-    if(!is.null(logger)) { # yeah, we are done
-      logger(paste("Finished regression-modelling from '", source,
-                  "' to '", destination, "' using ", cores,
-                  " cores.", sep="", collapse=""));
+    if(!is.null(logging)) { # yeah, we are done
+      logging("finished regression-modelling from '", source,
+              "' to '", destination, "' using ", cores,
+              " cores.");
     }
 
     return(result);

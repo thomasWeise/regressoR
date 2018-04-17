@@ -20,6 +20,4 @@ Open a file \code{file} produced by
 }
 \seealso{
 regressoR.batchLearn
-
-regressoR.batchLearn
 }
