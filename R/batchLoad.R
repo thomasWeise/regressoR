@@ -34,7 +34,7 @@ regressoR.batchLoad <- function(source=getwd(),
   logging <- makeLogger(logging, cores);
   logging <- force(logging);
   if(!is.null(logging)) {
-    logging("Now loading learned models from ", source, ".");
+    logging("now loading learned models from ", source, ".");
   }
 
   namesProcessor <- force(namesProcessor);
@@ -103,7 +103,7 @@ regressoR.batchLoad <- function(source=getwd(),
 
   if(!(is.null(logging))) {
     # print the status message
-    logging("Finished loading models fitted to ", length(results), " setups.")
+    logging("finished loading models fitted to ", length(results), " setups.")
   }
 
   # canonicalize the result

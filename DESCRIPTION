@@ -33,6 +33,7 @@ Collate:
     'learnForExport.R'
     'batchLearn.R'
     'batchLoad.R'
+    'batchPlot.R'
     'makeLearners.R'
     'learn.R'
     'loadResult.R'
