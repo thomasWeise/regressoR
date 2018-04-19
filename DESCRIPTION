@@ -1,7 +1,7 @@
 Package: regressoR
 Type: Package
 Title: An R Package for Fitting Models to 2-Dimensional (x-y) Data
-Version: 0.8.4
+Version: 0.8.5
 Author: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Maintainer: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Description: This package joins the different regression methodologies
@@ -37,4 +37,5 @@ Collate:
     'makeLearners.R'
     'learn.R'
     'loadResult.R'
+    'mergeResults.R'
 RoxygenNote: 6.0.1.9000
