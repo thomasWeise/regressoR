@@ -24,7 +24,7 @@ regressoR.batchLoad <- function(source=getwd(),
                                 namesProcessor=identity,
                                 check.directory=NULL,
                                 cores=1L,
-                                logging=if(cores <= 1L) { TRUE } else { file.path(destination, "log.txt"); }) {
+                                logging=(cores <= 1L)) {
 
   source <- force(source);
   source <- normalizePath(source);

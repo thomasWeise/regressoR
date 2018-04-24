@@ -8,8 +8,7 @@
 regressoR.batchLoad(source = getwd(),
   selector = path.extensionRegExp(extensions = "model", before.extension =
   "_single"), namesProcessor = identity, check.directory = NULL,
-  cores = 1L, logging = if (cores <= 1L) {     TRUE } else {    
-  file.path(destination, "log.txt") })
+  cores = 1L, logging = (cores <= 1L))
 }
 \arguments{
 \item{source}{the source folder}
