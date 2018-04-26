@@ -29,13 +29,10 @@ Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/utilizeR
 Collate: 
     'RegressionResult.R'
-    'RegressionResults.R'
     'learnForExport.R'
     'batchLearn.R'
-    'batchLoad.R'
     'batchPlot.R'
     'makeLearners.R'
     'learn.R'
     'loadResult.R'
-    'mergeResults.R'
 RoxygenNote: 6.0.1.9000
