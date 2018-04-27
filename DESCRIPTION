@@ -9,7 +9,6 @@ Description: This package joins the different regression methodologies
     through a simple interface.
 License: LGPL-3
 Encoding: UTF-8
-LazyData: true
 URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
 Imports: data.table (>= 1.10.4.3),
@@ -22,6 +21,8 @@ Imports: data.table (>= 1.10.4.3),
          utilizeR (>= 0.8.3)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)
+ByteCompile: true
+LazyData: true
 Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/regressoR.base,
          github::thomasWeise/regressoR.functional,
