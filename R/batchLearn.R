@@ -56,7 +56,7 @@
 #' @seealso regressoR.loadResult
 regressoR.batchLearn <- function(source=getwd(),
                                  destination=file.path(source, "../models"),
-                                 loader=function(file) read.csv(file, sep="\t")[c(1,2)],
+                                 loader=function(file) read.csv(file, sep="\t", header=FALSE)[c(1,2)],
                                  selector=path.extensionRegExp("txt"),
                                  check.directory=NULL,
                                  learn.single=TRUE,

@@ -6,9 +6,9 @@
   Fitted Models in another Directory}
 \usage{
 regressoR.batchLearn(source = getwd(), destination = file.path(source,
-  "../models"), loader = function(file) read.csv(file, sep = "\\t")[c(1, 2)],
-  selector = path.extensionRegExp("txt"), check.directory = NULL,
-  learn.single = TRUE, learn.all = FALSE,
+  "../models"), loader = function(file) read.csv(file, sep = "\\t", header =
+  FALSE)[c(1, 2)], selector = path.extensionRegExp("txt"),
+  check.directory = NULL, learn.single = TRUE, learn.all = FALSE,
   learners = regressoR.makeLearners(), representations = function(x, y)
   dataTransformeR::Transformation.applyDefault2D(x = x, y = y, addIdentity =
   TRUE), metricGenerator = regressoR.quality::RegressionQualityMetric.default,
