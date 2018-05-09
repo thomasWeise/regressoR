@@ -14,5 +14,6 @@ batchPlot.RegressionResults <- function(results, log="", plotPoints=TRUE, plotFu
                  yfun=function(result) result@metric@y,
                  ffun=function(result, x) result@result@f(x),
                  plotXY=plotPoints,
-                 plotXF=plotFun)
+                 plotXF=plotFun,
+                 log=log)
 }
