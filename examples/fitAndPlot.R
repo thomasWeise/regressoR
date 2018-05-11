@@ -59,7 +59,7 @@ for(q in 0:4/4) {
   batchPlot.RegressionResults(res, plotXY=TRUE, plotXF=TRUE,
                               main=paste("q=", q, sep="", collapse=""),
                               # as names, use the fitting quality
-                              names=vapply(X,
+                              names=vapply(res,
                                            FUN=function(r) as.character(round(r@result@quality, 5)),
                                            FUN.VALUE=""),
                               legend=list(x="bottom", horiz=TRUE));
