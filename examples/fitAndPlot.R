@@ -46,6 +46,15 @@ for(q in 0:4/4) {
                   FUN=function(ex)
                     regressoR.learnForExport(x=ex$x, y=ex$y, q=q));
 
+  for(i in seq_along(res)) {
+    cat("f", i, " modeled as ",
+        functionToString(res[[i]]@result@f),
+        " with quality=",
+        res[[i]]@result@quality,
+        " after ", res[[i]]@time,
+        "s.\n", sep="", collapse="");
+  }
+
   # plot the regression results
   batchPlot.RegressionResults(res, plotXY=TRUE, plotXF=TRUE,
                               main=paste("q=", q, sep="", collapse=""),
