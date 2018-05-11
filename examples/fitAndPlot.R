@@ -1,57 +1,59 @@
-set.seed(20140208L)
+set.seed(4577745L)
 
+library(utilizeR)
 library(plotteR)
 library(regressoR)
 
 # make an example
 make.example <- function(f) {
-  x <- sort(runif(n=21)); # generate x data
-  y <- rnorm(n=length(x),
-             mean=f(x),
-             s=0.075);  # noisy y
+  n <- 100; # make 100 points
+  x <- sort(runif(n=n, min=0, max=3)); # generate x data
+  y <- rnorm(n=n, mean=f(x), s=0.1);  # noisy y
+  x <- rnorm(n=n, mean=x, s=0.1); # noisy x
+  # the order is just relevant for the plotting, not for the fitting
+  x.o <- order(x);
+  y <- y[x.o];
+  x <- x[x.o];
   return(list(x=x, y=y, f=f));
 }
 
 # the three base functions
-f1 <- function(x) 1 - 0.2*x + x*x
-f2 <- function(x) 0.1 * exp(3 - x)
-f3 <- function(x) 1.2 + 0.7*sin(5*x)
+f <- c(function(x) 1 - 0.2*x + 0.75*x*x - 0.3*x*x*x,
+       function(x) 0.1 * exp(3 - x),
+       function(x) 1.2 + 0.7*sin(2*x));
 
 # create the three example data sets
-f1.ex <- make.example(f1);
-f2.ex <- make.example(f2);
-f3.ex <- make.example(f3);
+examples <- lapply(X=f, FUN=make.example);
 
 # we want to put 6 figues next to each other: the original data/function and
 # fitting results at five quality levels
 old.par <- par(mfrow=c(3, 2));
 
+log <- makeLogger(TRUE);
+log("First, we plot the original data.");
+
 # plot the original data
-batchPlot.list(list(f1.ex, f2.ex, f3.ex),
-               xfun=function(l) l$x,
-               yfun=function(l) l$y,
-               ffun=function(l,x) l$f(x),
+batchPlot.list(examples,
                names=c("f1", "f2", "f3"),
-               main="Original Data and Function Values for x")
+               ffun = function(l, x) l$f(x),
+               main="Original Data and Function Values for x",
+               legend=list(x="bottom", horiz=TRUE));
 
 # Automatically learn models and plot the results
 for(q in 0:4/4) {
-  cat("Now learning f1 using quality q=", q, "\n", sep="", collapse="");
-  r1 <- regressoR.learnForExport(x=f1.ex$x, y=f1.ex$y, q=q);
-  cat("Now learning f2 using quality q=", q, "\n", sep="", collapse="");
-  r2 <- regressoR.learnForExport(x=f2.ex$x, y=f2.ex$y, q=q);
-  cat("Now learning f3 using quality q=", q, "\n", sep="", collapse="");
-  r3 <- regressoR.learnForExport(x=f3.ex$x, y=f3.ex$y, q=q);
-  cat("Done learning, now plotting.\n");
-  X <- list(r1, r2, r3);
+  log("Now fitting in parallel, using quality q=", q);
+  res <- lapply(X=examples,
+                  FUN=function(ex)
+                    regressoR.learnForExport(x=ex$x, y=ex$y, q=q));
 
   # plot the regression results
-  batchPlot.RegressionResults(X, plotXY=TRUE, plotXF=TRUE,
+  batchPlot.RegressionResults(res, plotXY=TRUE, plotXF=TRUE,
                               main=paste("q=", q, sep="", collapse=""),
                               # as names, use the fitting quality
                               names=vapply(X,
-                                           FUN=function(r) round(r@result@quality),
-                                           FUN.VALUE=""));
+                                           FUN=function(r) as.character(round(r@result@quality, 5)),
+                                           FUN.VALUE=""),
+                              legend=list(x="bottom", horiz=TRUE));
 }
 
 # restore old settings
