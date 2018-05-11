@@ -48,7 +48,7 @@ for(q in 0:4/4) {
 
   for(i in seq_along(res)) {
     cat("f", i, " modeled as ",
-        functionToString(res[[i]]@result@f),
+        res[[i]]$name,
         " with quality=",
         res[[i]]@result@quality,
         " after ", res[[i]]@time,
