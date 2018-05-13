@@ -3,6 +3,7 @@ set.seed(4577745L)
 library(utilizeR)
 library(plotteR)
 library(regressoR)
+library(parallel)
 
 # make an example
 make.example <- function(f) {
@@ -10,10 +11,6 @@ make.example <- function(f) {
   x <- sort(runif(n=n, min=0, max=3)); # generate x data
   y <- rnorm(n=n, mean=f(x), s=0.1);  # noisy y
   x <- rnorm(n=n, mean=x, s=0.1); # noisy x
-  # the order is just relevant for the plotting, not for the fitting
-  x.o <- order(x);
-  y <- y[x.o];
-  x <- x[x.o];
   return(list(x=x, y=y, f=f));
 }
 
@@ -27,7 +24,7 @@ examples <- lapply(X=f, FUN=make.example);
 
 # we want to put 6 figues next to each other: the original data/function and
 # fitting results at five quality levels
-old.par <- par(mfrow=c(3, 2));
+old.par <- par(mfrow=c(3, 3));
 
 log <- makeLogger(TRUE);
 log("First, we plot the original data.");
@@ -40,24 +37,25 @@ batchPlot.list(examples,
                legend=list(x="bottom", horiz=TRUE));
 
 # Automatically learn models and plot the results
-for(q in 0:4/4) {
-  log("Now fitting in parallel, using quality q=", q);
+for(q in 0:8/8) {
+  qstr <- toString(round(q, 3));
+  log("Now fitting the models using fitting quality spec q=", qstr);
   res <- lapply(X=examples,
                   FUN=function(ex)
                     regressoR.learnForExport(x=ex$x, y=ex$y, q=q));
 
   for(i in seq_along(res)) {
-    cat("f", i, " modeled as ",
-        res[[i]]$name,
+    log("f", i, " modeled as ",
+        res[[i]]@name,
         " with quality=",
         res[[i]]@result@quality,
         " after ", res[[i]]@time,
-        "s.\n", sep="", collapse="");
+        "s");
   }
 
   # plot the regression results
   batchPlot.RegressionResults(res, plotXY=TRUE, plotXF=TRUE,
-                              main=paste("q=", q, sep="", collapse=""),
+                              main=paste("q=", qstr, sep="", collapse=""),
                               # as names, use the fitting quality
                               names=vapply(res,
                                            FUN=function(r) as.character(round(r@result@quality, 5)),

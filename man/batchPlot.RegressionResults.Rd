@@ -19,17 +19,14 @@ batchPlot.RegressionResults(results, ...)
 \code{NULL})}
   \item{widthXF}{the line width for lines to be plotted (only considered if
 \code{plotXF} is \code{TRUE} and \code{ffun} is not \code{NULL})}
-  \item{log}{the names of the axes (\code{x}, \code{y}) that should be
-logarithmically scaled}
   \item{names}{the names of the lines to be printed in the legend, or
 \code{NULL} if no legend should be plotted}
   \item{colors}{the colors to be used for the plot}
-  \item{xlab}{the label for the \code{x}-axis, or the empty string if no label
-is needed}
-  \item{ylab}{the label for the \code{y}-axis, or the empty string if no label
-is needed}
-  \item{legendPos}{the position of the legend, if a legend should be printed
-(see \code{names}), or \code{NULL} if no legend is needed}
+  \item{xlab}{the label for the x-axis}
+  \item{ylab}{the label for the y-axis}
+  \item{legend}{a list of additional parameters to be passed to
+\code{\link[graphics]{legend}}, or \code{NULL} to use the default
+parameters}
 }}
 }
 \description{
