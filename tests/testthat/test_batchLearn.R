@@ -43,23 +43,29 @@ slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
   f <- function(x) 1+exp(2-x/4)
   .file.make.2(dir.a, "1.txt", f);
   .file.make.2(dir.a, "2.txt", f);
-  .file.make.2(dir.a, "3.txt", f);
-  .file.make.2(dir.a, "4.txt", f);
+  if(slow.tests) {
+    .file.make.2(dir.a, "3.txt", f);
+    .file.make.2(dir.a, "4.txt", f);
+  }
 
   f <- function(x) 1+exp(1.8-x/9)+0.4*sin(x)
   dir.b <- file.path(results, "b");
   dir.create(dir.b, showWarnings=FALSE, recursive=TRUE);
   .file.make.2(dir.b, "1.txt", f);
   .file.make.2(dir.b, "2.txt", f);
-  .file.make.2(dir.b, "3.txt", f);
-  .file.make.2(dir.b, "4.txt", f);
+  if(slow.tests) {
+    .file.make.2(dir.b, "3.txt", f);
+    .file.make.2(dir.b, "4.txt", f);
+  }
 
   f <- function(x) 1+exp(2.18-x/3.3)+0.4*cos(x)
   dir.c <- file.path(results, "c");
   dir.create(dir.c, showWarnings=FALSE, recursive=TRUE);
   .file.make.2(dir.c, "1.txt", f);
   .file.make.2(dir.c, "2.txt", f);
-  .file.make.2(dir.c, "3.txt", f);
+  if(slow.tests) {
+    .file.make.2(dir.c, "3.txt", f);
+  }
 
   return(c(dir, results));
 }
@@ -71,22 +77,28 @@ slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
                                             returnResults = TRUE,
                                             cores=cores,
                                             logging = FALSE);
-  expect_length(output, 11L);
+  expect_length(output, if(slow.tests) { 11L } else { 6L });
   for(res in output) {
     .check(res);
   }
 
   .check(readRDS(file.path(results, "../models/a/1_single.model")));
   .check(readRDS(file.path(results, "../models/a/2_single.model")));
-  .check(readRDS(file.path(results, "../models/a/3_single.model")));
-  .check(readRDS(file.path(results, "../models/a/4_single.model")));
+    if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/a/3_single.model")));
+    .check(readRDS(file.path(results, "../models/a/4_single.model")));
+    }
   .check(readRDS(file.path(results, "../models/b/1_single.model")));
   .check(readRDS(file.path(results, "../models/b/2_single.model")));
-  .check(readRDS(file.path(results, "../models/b/3_single.model")));
-  .check(readRDS(file.path(results, "../models/b/4_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/b/3_single.model")));
+    .check(readRDS(file.path(results, "../models/b/4_single.model")));
+  }
   .check(readRDS(file.path(results, "../models/c/1_single.model")));
   .check(readRDS(file.path(results, "../models/c/2_single.model")));
-  .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  }
 
   unlink(file.path(results, "../models"), recursive = TRUE);
 }
@@ -103,15 +115,21 @@ slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
 
   .check(readRDS(file.path(results, "../models/a/1_single.model")));
   .check(readRDS(file.path(results, "../models/a/2_single.model")));
-  .check(readRDS(file.path(results, "../models/a/3_single.model")));
-  .check(readRDS(file.path(results, "../models/a/4_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/a/3_single.model")));
+    .check(readRDS(file.path(results, "../models/a/4_single.model")));
+    }
   .check(readRDS(file.path(results, "../models/b/1_single.model")));
   .check(readRDS(file.path(results, "../models/b/2_single.model")));
-  .check(readRDS(file.path(results, "../models/b/3_single.model")));
-  .check(readRDS(file.path(results, "../models/b/4_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/b/3_single.model")));
+    .check(readRDS(file.path(results, "../models/b/4_single.model")));
+    }
   .check(readRDS(file.path(results, "../models/c/1_single.model")));
   .check(readRDS(file.path(results, "../models/c/2_single.model")));
-  .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  }
 
   unlink(file.path(results, "../models"), recursive = TRUE);
 }
@@ -141,7 +159,7 @@ slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
                                             returnResults = TRUE,
                                             cores=cores,
                                             logging=FALSE);
-  expect_length(output, 14L);
+  expect_length(output, if(slow.tests) { 14L } else { 9L });
   for(res in output) {
     .check(res);
   }
@@ -151,15 +169,21 @@ slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
   .check(readRDS(file.path(results, "../models/c/all.model")));
   .check(readRDS(file.path(results, "../models/a/1_single.model")));
   .check(readRDS(file.path(results, "../models/a/2_single.model")));
-  .check(readRDS(file.path(results, "../models/a/3_single.model")));
-  .check(readRDS(file.path(results, "../models/a/4_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/a/3_single.model")));
+    .check(readRDS(file.path(results, "../models/a/4_single.model")));
+    }
   .check(readRDS(file.path(results, "../models/b/1_single.model")));
   .check(readRDS(file.path(results, "../models/b/2_single.model")));
-  .check(readRDS(file.path(results, "../models/b/3_single.model")));
-  .check(readRDS(file.path(results, "../models/b/4_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/b/3_single.model")));
+    .check(readRDS(file.path(results, "../models/b/4_single.model")));
+    }
   .check(readRDS(file.path(results, "../models/c/1_single.model")));
   .check(readRDS(file.path(results, "../models/c/2_single.model")));
-  .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  if(slow.tests) {
+    .check(readRDS(file.path(results, "../models/c/3_single.model")));
+  }
 
   unlink(file.path(results, "../models"), recursive = TRUE);
 }
