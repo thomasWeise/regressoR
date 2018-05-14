@@ -27,6 +27,7 @@ regressoR.learnForExport <- function(x, y,
                               q=0.75,
                               includeMetric=TRUE) {
 
+  # execute the learner and measure the time
   result <- NULL;
   time <- max(0L, system.time(
     result <- regressoR.learn(x=x, y=y, learners=learners,
@@ -35,13 +36,14 @@ regressoR.learnForExport <- function(x, y,
                               q=q)
   )[3]);
 
-
+  # create a new instance of the regression result record
   return(RegressionResult.new(time=time,
                               result=result,
                               metric=(if(includeMetric) {
                                 metricGenerator(x, y)
                               } else { NULL })));
 
+  # do a lot of forcing to make sure that everything is evaluated
   result <- force(result);
   result@result <- force(result@result);
   result@metric <- force(result@metric);

@@ -15,8 +15,9 @@ Imports: data.table (>= 1.10.4.3),
          dataTransformeR (>= 0.8.10),
          methods (>= 3.3.2),
          plotteR (>= 0.8.0),
-         regressoR.base (>= 0.8.5),
+         regressoR.base (>= 0.8.6),
          regressoR.functional (>= 0.8.7),
+         regressoR.functional.models (>= 0.8.12),
          regressoR.quality (>= 0.8.4),
          utils (>= 3.3.2),
          utilizeR (>= 0.8.3)
@@ -29,6 +30,7 @@ Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/plotteR,
          github::thomasWeise/regressoR.base,
          github::thomasWeise/regressoR.functional,
+         github::thomasWeise/regressoR.functional.models,
          github::thomasWeise/regressoR.quality,
          github::thomasWeise/utilizeR
 Collate: 
@@ -36,6 +38,7 @@ Collate:
     'learnForExport.R'
     'batchLearn.R'
     'batchPlot.R'
+    'learnTrivial.R'
     'makeLearners.R'
     'learn.R'
     'loadResult.R'

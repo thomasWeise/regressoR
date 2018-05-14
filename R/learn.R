@@ -1,4 +1,5 @@
 #' @include makeLearners.R
+#' @include learnTrivial.R
 
 #' @title Learn a Regression Model from the Given Data Set
 #' @description Use the \code{learnerSelectoR} package to apply a set of
@@ -78,6 +79,13 @@ regressoR.learn <- function(x, y, learners = regressoR.makeLearners(),
                             representations=dataTransformeR::Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
                             metricGenerator=regressoR.quality::RegressionQualityMetric.default,
                             q=0.75) {
+  # is there a trivial solution?
+  res <- .regressoR.learnTrivial(x, y);
+  if(!is.null(res)) {
+    # yes, then no learning is necessary
+    return(res);
+  }
+  # no, so let's learn
   return(regressoR.applyLearners(x=x, y=y, learners=learners,
                                  representations=representations,
                                  metricGenerator=metricGenerator,
