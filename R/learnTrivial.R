@@ -5,10 +5,11 @@
 # @return an instance of \code{\link{FittedModel}} which represents the
 #   relationship between the \code{x} and \code{y} values
 #' @importFrom regressoR.functional.models
-#'   FunctionalModel.linear.from.two.points
-#'   FunctionalModel.quadratic.from.three.points FunctionalModel.quadratic
-#'   FunctionalModel.linear FunctionalModel.constant
+#' FunctionalModel.linear.from.two.points
+#' FunctionalModel.quadratic.from.three.points FunctionalModel.quadratic
+#' FunctionalModel.linear FunctionalModel.constant
 #' @importFrom regressoR.functional FittedFunctionalModel.new
+#'   FittedFunctionalModel.finalize
 #' @importFrom functionComposeR function.canonicalize
 .regressoR.learnTrivial <- function(xx, yy) {
   # find all unique points
