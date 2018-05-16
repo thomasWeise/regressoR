@@ -22,9 +22,12 @@ f <- c(function(x) 1 - 0.2*x + 0.75*x*x - 0.3*x*x*x,
 # create the three example data sets
 examples <- lapply(X=f, FUN=make.example);
 
-# we want to put 6 figues next to each other: the original data/function and
+if(!exists("n")) { n <- 3L; total <- n + 1L;}
+if(!exists("arrangement")) { arrangement <- plots.arrange(total); }
+
+# we want to put the figues next to each other: the original data/function and
 # fitting results at five quality levels
-old.par <- par(mfrow=c(3, 3));
+old.par <- par(mfrow=arrangement);
 
 log <- makeLogger(TRUE);
 log("First, we plot the original data.");
@@ -35,31 +38,39 @@ batchPlot.list(examples,
                main="Original Data and Function Values for x",
                legend=list(x="bottom", horiz=TRUE));
 
+
+# create the fitting tasks to be solved
+tasks <- unlist(lapply(X=seq_len(n),
+                FUN=function(i) {
+                  lapply(X=examples, FUN=function(d) { d$q = (i-1L)/(n-1L); d })
+                }), recursive=FALSE);
+
+# compute the results
+log("Now we apply the fitting procedure in parallel using ",
+    getOption("mc.cores", 2L), " cores.");
+results <- mclapply(X=tasks, FUN=function(task)
+                    regressoR.learnForExport(x=task$x, y=task$y, q=task$q));
+log("Done with the fitting, now plotting.");
+
 # Automatically learn models and plot the results
-for(q in 0:8/8) {
-  qstr <- toString(round(q, 3));
-  log("Now fitting the models using fitting quality spec q=", qstr);
-  res <- lapply(X=examples,
-                  FUN=function(ex)
-                    regressoR.learnForExport(x=ex$x, y=ex$y, q=q));
+for(i in seq_len(n)) {
+  # select the right results
+  start <- (i-1L)*length(examples) + 1L;
+  end   <- (i * length(examples));
+  res   <- results[start:end];
 
-  for(i in seq_along(res)) {
-    log("f", i, " modeled as ",
-        res[[i]]@name,
-        " with quality=",
-        res[[i]]@result@quality,
-        " after ", res[[i]]@time,
-        "s");
-  }
-
-  # plot the regression results
+  # plot the regression results, while extending the models slightly beyond the original range
+  # to see how they generalize
   batchPlot.RegressionResults(res, plotXY=TRUE, plotXF=TRUE,
-                              main=paste("q=", qstr, sep="", collapse=""),
+                              main=paste("q=", round(res[[1L]]@result@quality, 3),
+                                         sep="", collapse=""),
                               # as names, use the fitting quality
                               names=vapply(res,
-                                           FUN=function(r) as.character(round(r@result@quality, 5)),
+                                           FUN=function(r) as.character(round(r@result@quality, 3)),
                                            FUN.VALUE=""),
-                              legend=list(x="bottom", horiz=TRUE));
+                              x.min.lower=-1,x.min.upper=-1,
+                              x.max.lower=4, x.max.upper=4, x.add=TRUE,
+                              legend=list(x="right", horiz=FALSE));
 }
 
 # restore old settings
