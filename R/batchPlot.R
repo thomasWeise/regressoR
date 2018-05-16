@@ -10,6 +10,6 @@ batchPlot.RegressionResults <- function(results, ...) {
   batchPlot.list(data=results,
                  xfun=function(result) result@metric@x,
                  yfun=function(result) result@metric@y,
-                 ffun=function(result, x) result@result@f(x),
+                 ffun=function(result) result@result@f,
                  ...)
 }

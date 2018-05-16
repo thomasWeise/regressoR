@@ -27,6 +27,25 @@ batchPlot.RegressionResults(results, ...)
   \item{legend}{a list of additional parameters to be passed to
 \code{\link[graphics]{legend}}, or \code{NULL} to use the default
 parameters}
+  \item{x.min.lower}{a lower bound for the automatically computed \code{x}
+coordinate minimum}
+  \item{x.min.upper}{an upper bound for the automatically computed \code{x}
+coordinate minimum}
+  \item{x.max.lower}{a lower bound for the automatically computed \code{x}
+coordinate maximum}
+  \item{x.max.upper}{an upper bound for the automatically computed \code{x}
+coordinate maximum}
+  \item{y.min.lower}{a lower bound for the automatically computed \code{y}
+coordinate minimum}
+  \item{y.min.upper}{an upper bound for the automatically computed \code{y}
+coordinate minimum}
+  \item{y.max.lower}{a lower bound for the automatically computed \code{y}
+coordinate maximum}
+  \item{y.max.upper}{an upper bound for the automatically computed \code{y}
+coordinate maximum}
+  \item{x.add}{some additional \code{x} coordinates at which the function
+should be evaluated, or \code{TRUE} if the \code{x} coordinate minimum and
+maximum over all data sets should be added as evaluation points}
 }}
 }
 \description{
