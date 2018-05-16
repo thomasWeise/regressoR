@@ -8,8 +8,8 @@
 #' @export batchPlot.RegressionResults
 batchPlot.RegressionResults <- function(results, ...) {
   batchPlot.list(data=results,
-                 xfun=function(x) result@metric@x,
-                 yfun=function(x) result@metric@y,
-                 ffun=function(x) result@result@f,
+                 xfun=function(x) x@metric@x,
+                 yfun=function(x) x@metric@y,
+                 ffun=function(x) x@result@f,
                  ...)
 }
