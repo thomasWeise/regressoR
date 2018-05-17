@@ -5,9 +5,8 @@
 # @return an instance of \code{\link{FittedModel}} which represents the
 #   relationship between the \code{x} and \code{y} values
 #' @importFrom regressoR.functional.models
-#' FunctionalModel.linear.from.two.points
-#' FunctionalModel.quadratic.from.three.points FunctionalModel.quadratic
-#' FunctionalModel.linear FunctionalModel.constant
+#'   FunctionalModel.linear.from.two.points FunctionalModel.linear
+#'   FunctionalModel.constant
 #' @importFrom regressoR.functional FittedFunctionalModel.new
 #'   FittedFunctionalModel.finalize
 #' @importFrom functionComposeR function.canonicalize
@@ -41,23 +40,6 @@
                FittedFunctionalModel.new(model=FunctionalModel.linear(),
                                          par=par,
                                          quality=0)));
-      }
-    } else {
-      # if there are three points, we can try to connect them as quadratic function
-      if(n <= 3L) {
-        par <- FunctionalModel.quadratic.from.three.points(uniPoints[[1L]][1L],
-                                                           uniPoints[[1L]][2L],
-                                                           uniPoints[[2L]][1L],
-                                                           uniPoints[[2L]][2L],
-                                                           uniPoints[[3L]][1L],
-                                                           uniPoints[[3L]][2L]);
-        if(!(is.null(par))) {
-          par <- force(par);
-          return(FittedFunctionalModel.finalize(
-                 FittedFunctionalModel.new(model=FunctionalModel.quadratic(),
-                                           par=par,
-                                           quality=0)));
-        }
       }
     }
   }
