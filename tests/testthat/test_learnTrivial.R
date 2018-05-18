@@ -64,7 +64,7 @@ test_that("Test .regressoR.learnTrivial three points", {
   }
 
   res <- .regressoR.learnTrivial(c(1, 2, 1, 3), c(f(1), f(2), f(1), f(3)));
-  if(!(is.null)) {
+  if(!(is.null(res))) {
     expect_is(res, "FittedModel");
     expect_identical(res@f(1), f(1));
     expect_identical(res@f(2), f(2));
