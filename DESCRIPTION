@@ -1,7 +1,7 @@
 Package: regressoR
 Type: Package
 Title: An R Package for Fitting Models to 2-Dimensional (x-y) Data
-Version: 0.8.6
+Version: 0.8.7
 Author: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Maintainer: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Description: This package joins the different regression methodologies
@@ -17,8 +17,8 @@ Imports: data.table (>= 1.10.4.3),
          methods (>= 3.3.2),
          plotteR (>= 0.8.3),
          regressoR.base (>= 0.8.6),
-         regressoR.functional (>= 0.8.7),
-         regressoR.functional.models (>= 0.8.13),
+         regressoR.functional (>= 0.8.8),
+         regressoR.functional.models (>= 0.8.14),
          regressoR.quality (>= 0.8.4),
          utils (>= 3.3.2),
          utilizeR (>= 0.8.3)
