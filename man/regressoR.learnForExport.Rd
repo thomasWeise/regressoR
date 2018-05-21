@@ -4,11 +4,10 @@
 \alias{regressoR.learnForExport}
 \title{Learn a Model for Export}
 \usage{
-regressoR.learnForExport(x, y, learners = regressoR.makeLearners(),
-  representations = dataTransformeR::Transformation.applyDefault2D(x = x, y =
-  y, addIdentity = TRUE),
-  metricGenerator = regressoR.quality::RegressionQualityMetric.default,
-  q = 0.75, includeMetric = TRUE)
+regressoR.learnForExport(x, y, learners = regressoR.defaultLearners(),
+  representations = Transformation.applyDefault2D(x = x, y = y, addIdentity =
+  TRUE), metricGenerator = RegressionQualityMetric.default, q = 0.75,
+  includeMetric = TRUE)
 }
 \arguments{
 \item{x}{the \code{x} coordinates, i.e., the input values}

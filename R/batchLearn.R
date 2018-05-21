@@ -1,5 +1,3 @@
-#' @include learnForExport.R
-
 #' @title Apply the Regression Learning to a Directory of Data and Store the
 #'   Fitted Models in another Directory
 #' @description Recursively, a \code{source} directory is traversed and all
@@ -54,6 +52,8 @@
 #' @importFrom utils read.csv
 #' @seealso regressoR.learnForExport
 #' @seealso regressoR.loadResult
+#' @include learnForExport.R
+#' @include defaultLearners.R
 regressoR.batchLearn <- function(source=getwd(),
                                  destination=file.path(source, "../models"),
                                  loader=function(file) read.csv(file, sep="\t", header=FALSE)[c(1,2)],
@@ -61,9 +61,9 @@ regressoR.batchLearn <- function(source=getwd(),
                                  check.directory=NULL,
                                  learn.single=TRUE,
                                  learn.all=FALSE,
-                                 learners=regressoR.makeLearners(),
-                                 representations=function(x, y) dataTransformeR::Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
-                                 metricGenerator=regressoR.quality::RegressionQualityMetric.default,
+                                 learners=regressoR.defaultLearners(),
+                                 representations=function(x, y) Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
+                                 metricGenerator=RegressionQualityMetric.default,
                                  suffix.single="_single.model",
                                  suffix.all="_all.model",
                                  q=0.75,

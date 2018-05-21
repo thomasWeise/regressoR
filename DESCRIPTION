@@ -20,6 +20,7 @@ Imports: data.table (>= 1.10.4.3),
          regressoR.functional (>= 0.8.8),
          regressoR.functional.models (>= 0.8.14),
          regressoR.quality (>= 0.8.4),
+         regressoR.splines (>= 0.8.0),
          utils (>= 3.3.2),
          utilizeR (>= 0.8.3)
 Suggests: testthat (>= 2.0.0),
@@ -34,14 +35,15 @@ Remotes: github::thomasWeise/dataTransformeR,
          github::thomasWeise/regressoR.functional,
          github::thomasWeise/regressoR.functional.models,
          github::thomasWeise/regressoR.quality,
+         github::thomasWeise/regressoR.splines,
          github::thomasWeise/utilizeR
 Collate: 
     'RegressionResult.R'
+    'defaultLearners.R'
     'learnForExport.R'
     'batchLearn.R'
     'batchPlot.R'
     'learnTrivial.R'
-    'makeLearners.R'
     'learn.R'
     'loadResult.R'
 RoxygenNote: 6.0.1.9000

@@ -20,10 +20,11 @@
 #' @importFrom dataTransformeR Transformation.applyDefault2D
 #' @importFrom regressoR.quality RegressionQualityMetric.default
 #' @seealso regressoR.batchLearn
+#' @include defaultLearners.R
 regressoR.learnForExport <- function(x, y,
-                              learners = regressoR.makeLearners(),
-                              representations=dataTransformeR::Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
-                              metricGenerator=regressoR.quality::RegressionQualityMetric.default,
+                              learners = regressoR.defaultLearners(),
+                              representations=Transformation.applyDefault2D(x=x, y=y, addIdentity=TRUE),
+                              metricGenerator=RegressionQualityMetric.default,
                               q=0.75,
                               includeMetric=TRUE) {
 

@@ -9,9 +9,9 @@ regressoR.batchLearn(source = getwd(), destination = file.path(source,
   "../models"), loader = function(file) read.csv(file, sep = "\\t", header =
   FALSE)[c(1, 2)], selector = path.extensionRegExp("txt"),
   check.directory = NULL, learn.single = TRUE, learn.all = FALSE,
-  learners = regressoR.makeLearners(), representations = function(x, y)
-  dataTransformeR::Transformation.applyDefault2D(x = x, y = y, addIdentity =
-  TRUE), metricGenerator = regressoR.quality::RegressionQualityMetric.default,
+  learners = regressoR.defaultLearners(), representations = function(x, y)
+  Transformation.applyDefault2D(x = x, y = y, addIdentity = TRUE),
+  metricGenerator = RegressionQualityMetric.default,
   suffix.single = "_single.model", suffix.all = "_all.model", q = 0.75,
   includeMetric = TRUE, cores = 1L, logging = if (cores <= 1L) {     TRUE
   } else {     file.path(destination, "log.txt") }, returnResults = FALSE,
