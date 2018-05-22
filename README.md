@@ -73,6 +73,9 @@ This way, even with just a linear and a quadratic model in the library, we can r
     
 ### 2.2. Bigger Example
 
+Here you can find some example fitting results for different levels of fitting effort `q`, from minimal (`q=0`) to maximal (`q=1`).
+At the current, probably inefficient version of our code, running this example takes quite some time.
+
 ![Bigger Example with Functions Fitted at Different Fitting Powers](examples/fitAndPlot.png)
 
     set.seed(4577745L);
