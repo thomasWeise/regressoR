@@ -27,21 +27,6 @@
                                        par=c(a),
                                        quality=0)));
     }
-  } else {
-    if(n <= 2L) {
-      # if there are two points, we can connect them as linear function
-      par <- FunctionalModel.linear.from.two.points(uniPoints[[1L]][1L],
-                                                    uniPoints[[1L]][2L],
-                                                    uniPoints[[2L]][1L],
-                                                    uniPoints[[2L]][2L]);
-      if(!(is.null(par))) {
-        par <- force(par);
-        return(FittedFunctionalModel.finalize(
-               FittedFunctionalModel.new(model=FunctionalModel.linear(),
-                                         par=par,
-                                         quality=0)));
-      }
-    }
   }
 
   # there are more than three unique points (or three points that do not form a
