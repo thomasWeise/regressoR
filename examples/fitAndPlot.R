@@ -14,7 +14,7 @@ log("We will utilize parallel computing if possible.");
 
 # make an example
 make.example <- function(f) {
-  log("Now creating example for function ", functionToString(f), ".");
+  log("Now creating example for function ", function.toString(f), ".");
   n <- 225; # make 225 points
   x <- sort(runif(n=n, min=0, max=3)); # generate x data
   y <- rnorm(n=n, mean=f(x), s=0.1);  # noisy y

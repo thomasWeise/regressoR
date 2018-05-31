@@ -1,7 +1,7 @@
 Package: regressoR
 Type: Package
 Title: An R Package for Fitting Models to 2-Dimensional (x-y) Data
-Version: 0.8.9
+Version: 0.8.10
 Author: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Maintainer: Dr. Thomas Weise <tweise@hfuu.edu.cn>
 Description: This package joins the different regression methodologies
@@ -12,17 +12,17 @@ Encoding: UTF-8
 URL: http://www.github.com/thomasWeise/regressoR
 BugReports: http://www.github.com/thomasWeise/regressoR/issues
 Imports: data.table (>= 1.10.4.3),
-         dataTransformeR (>= 0.8.10),
-         functionComposeR (>= 0.8.9),
+         dataTransformeR (>= 0.8.11),
+         functionComposeR (>= 0.8.10),
          methods (>= 3.3.2),
-         plotteR (>= 0.8.3),
-         regressoR.base (>= 0.8.6),
-         regressoR.functional (>= 0.8.8),
-         regressoR.functional.models (>= 0.8.14),
-         regressoR.quality (>= 0.8.4),
-         regressoR.splines (>= 0.8.5),
+         plotteR (>= 0.8.4),
+         regressoR.base (>= 0.8.8),
+         regressoR.functional (>= 0.8.10),
+         regressoR.functional.models (>= 0.8.15),
+         regressoR.quality (>= 0.8.5),
+         regressoR.splines (>= 0.8.6),
          utils (>= 3.3.2),
-         utilizeR (>= 0.8.3)
+         utilizeR (>= 0.8.4)
 Suggests: testthat (>= 2.0.0),
           roxygen2 (>= 6.0.1)
 Depends: R (>= 3.3.0)
