@@ -9,4 +9,6 @@ r:
   - release
   - devel
 after_script:
-  - R -e 'devtools::install_github("thomasWeise/regressoR")'
+  - |
+    R -e 'if(require("regressoR.regressoR")) { remove.packages("regressoR.regressoR"); }; r <- devtools::install_github("thomasWeise/regressoR.regressoR"); if(r) { cat("OK\n"); q(save="no", status=0); } else { cat("error: ", r, "\n", sep="", collapse=""); q(save="no", status=1); }'
+
