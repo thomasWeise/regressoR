@@ -7,14 +7,14 @@ library(parallel);
 library(regressoR.functional);
 library(regressoR.functional.models);
 
-if(!exists("log")) { log <- makeLogger(TRUE); }
-log("Welcome to the regression example.");
-log("We will create three example data sets and then fit them using different fitting powers.");
-log("We will utilize parallel computing if possible.");
+if(!exists("logger")) { logger <- makeLogger(TRUE); }
+logger("Welcome to the regression example.");
+logger("We will create three example data sets and then fit them using different fitting powers.");
+logger("We will utilize parallel computing if possible.");
 
 # make an example
 make.example <- function(f) {
-  log("Now creating example for function ", function.toString(f), ".");
+  logger("Now creating example for function ", function.toString(f), ".");
   n <- 225; # make 225 points
   x <- sort(runif(n=n, min=0, max=3)); # generate x data
   y <- rnorm(n=n, mean=f(x), s=0.1);  # noisy y
@@ -32,12 +32,12 @@ examples <- lapply(X=f, FUN=make.example);
 # get the minimum and maximal actual x coordinates
 min.x    <- min(vapply(X=examples, FUN=function(z) min(z$x), FUN.VALUE=-1));
 max.x    <- max(vapply(X=examples, FUN=function(z) max(z$x), FUN.VALUE=4));
-log("The minimum actual x value is ", min.x, " and the maximum value is ", max.x, ".");
+logger("The minimum actual x value is ", min.x, " and the maximum value is ", max.x, ".");
 
 range.x <- max.x - min.x;
 start.x <- floor(10*(min.x - 0.1*range.x))/10;
 end.x   <- ceiling(10*(max.x + 0.1*range.x))/10;
-log("We will draw the diagrams from x=", start.x,
+logger("We will draw the diagrams from x=", start.x,
     " to x=", end.x,
     " to test the generalization ability of the regression results.");
 
@@ -48,12 +48,12 @@ if(!exists("arrangement")) {
 
 # we want to put the figues next to each other: the original data/function and
 # fitting results at five quality levels
-log("Setting a grid of ", arrangement[1],
+logger("Setting a grid of ", arrangement[1],
     " rows and ", arrangement[2],
     " columns for the ", total, " diagrams.")
 old.par <- par(mfrow=arrangement);
 
-log("First, we plot the original data.");
+logger("First, we plot the original data.");
 
 # plot the original data
 batchPlot.list(examples,
@@ -73,27 +73,27 @@ tasks <- unlist(lapply(X=seq_len(n),
                     d # return example function + fitting power
                     })
                 }), recursive=FALSE);
-log("We defined ", length(tasks), " tasks to be solved in parallel.");
+logger("We defined ", length(tasks), " tasks to be solved in parallel.");
 
 # get the number of cores
 cores <- getOption("mc.cores");
 if(is.null(cores)) {
   cores <- parallel::detectCores();
   options(mc.cores=cores);
-  log("Detected ", cores, " cores for parallel computation.");
+  logger("Detected ", cores, " cores for parallel computation.");
 } else {
-  log("Number of cores for parallel computation provided as ", cores);
+  logger("Number of cores for parallel computation provided as ", cores);
 }
 
 # compute the results
-log("Now we apply the fitting procedure in parallel using ",
+logger("Now we apply the fitting procedure in parallel using ",
     getOption("mc.cores", 2L), " cores.");
 
 # learn in parallel
 results <- mclapply(X=tasks, FUN=function(task)
                     regressoR.learnForExport(
                     x=task$x, y=task$y, q=task$q));
-log("Done with the fitting, now plotting.");
+logger("Done with the fitting, now plotting.");
 
 x.dummy <- start.x + ((end.x - start.x) * ((0:100)/100));
 
@@ -127,4 +127,4 @@ for(i in seq_len(n)) {
 # restore old settings
 invisible(par(old.par));
 
-log("All done.");
+logger("All done.");

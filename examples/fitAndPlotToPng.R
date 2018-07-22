@@ -3,10 +3,10 @@ library(plotteR);
 library(utilizeR);
 
 # define the number of plots
-log <- makeLogger(TRUE);
+logger <- makeLogger(TRUE);
 n           <- 5L;
 total       <- 1L + n;
-log("We will do ", n, " fitting result diagrams, i.e., ",
+logger("We will do ", n, " fitting result diagrams, i.e., ",
     total, " diagrams in total (with the original data plot).");
 
 # get a reasonable arrangement and figure size
@@ -20,7 +20,7 @@ w.px <- as.integer(round(size[1] * resolution));
 h.px <- as.integer(round(size[2] * resolution));
 # we want to put the figues next to each other: the original data/function and
 # fitting results at five quality levels
-log("In order to facilitate an image with ", arrangement[1],
+logger("In order to facilitate an image with ", arrangement[1],
     " rows and ", arrangement[2],
     " columns for the ", total,
     " diagrams, we set the width to ",
