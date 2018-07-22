@@ -41,7 +41,7 @@ logger("We will draw the diagrams from x=", start.x,
     " to x=", end.x,
     " to test the generalization ability of the regression results.");
 
-if(!exists("n")) { n <- 3L; total <- n + 1L;}
+if(!exists("n")) { n <- 7L; total <- n + 1L;}
 if(!exists("arrangement")) {
   arrangement <- plots.arrange(total);
 }
@@ -69,8 +69,10 @@ abline(v=max.x, col="gray");
 tasks <- unlist(lapply(X=seq_len(n),
                 FUN=function(i) {
                   lapply(X=examples, FUN=function(d) {
-                    d$q = round((i-1L)/(n-1L), 2); # add power
-                    d # return example function + fitting power
+                    d$q <- round((i-1L)/(n-1L), 2); # add power
+                    d$q <- force(d$q);
+                    d   <- force(d);
+                    return(d); # return example function + fitting power
                     })
                 }), recursive=FALSE);
 logger("We defined ", length(tasks), " tasks to be solved in parallel.");

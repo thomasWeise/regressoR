@@ -4,7 +4,7 @@ library(utilizeR);
 
 # define the number of plots
 logger <- makeLogger(TRUE);
-n           <- 5L;
+n           <- 7L;
 total       <- 1L + n;
 logger("We will do ", n, " fitting result diagrams, i.e., ",
     total, " diagrams in total (with the original data plot).");
