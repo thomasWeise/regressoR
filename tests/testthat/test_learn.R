@@ -1,7 +1,9 @@
 library("regressoR")
 context("regressoR.learn")
 
-slow.tests <- (is.na(Sys.getenv("TRAVIS", unset=NA)))
+slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
+if(slow.tests) { print("Slow tests for learn."); } else
+               { print("Fast tests for learn."); }
 
 test_that("Test regressoR.learn I", {
   if(slow.tests) {
@@ -12,7 +14,7 @@ test_that("Test regressoR.learn I", {
     expect_true(!(is.null(result)));
     expect_is(result, "FittedModel");
     validObject(result);
-  }
+  } else { expect_true(TRUE); }
 })
 
 test_that("Test regressoR.learn II", {
@@ -25,5 +27,5 @@ test_that("Test regressoR.learn II", {
     expect_true(!(is.null(result)));
     expect_is(result, "FittedModel");
     validObject(result);
-  }
+  } else { expect_true(TRUE); }
 })

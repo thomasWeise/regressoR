@@ -15,6 +15,8 @@ context("regressoR.learnForExport")
 }
 
 slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
+if(slow.tests) { print("Slow tests for learnForExport."); } else
+               { print("Fast tests for learnForExport."); }
 
 test_that("Test regressoR.learnForExport I", {
   if(slow.tests) {
@@ -22,7 +24,7 @@ test_that("Test regressoR.learnForExport I", {
     dx <- rnorm(n);
     dy <- rnorm(n=n, mean=50*dx*dx-33);
     .check(regressoR.learnForExport(x=dx, y=dy));
-  }
+  } else { expect_true(TRUE); }
 })
 
 test_that("Test regressoR.learnForExport II", {
@@ -32,5 +34,5 @@ test_that("Test regressoR.learnForExport II", {
     dy.raw <- 1 + 0.4* exp(5 - 3*dx + 0.6*dx*dx)
     dy <- rnorm(n=n, mean=dy.raw)
     .check(regressoR.learnForExport(x=dx, y=dy));
-  }
+  } else { expect_true(TRUE); }
 })

@@ -24,8 +24,6 @@ test_that("Test regressoR.defaultLearners()", {
 })
 
 
-
-
 test_that("Test regressoR.monotonousLearners()", {
   learners <- regressoR.monotonousLearners();
   expect_true(!is.null(learners));

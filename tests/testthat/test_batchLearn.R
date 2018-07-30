@@ -3,6 +3,8 @@ context("regressoR.batchLearn")
 
 
 slow.tests <- is.na(Sys.getenv("TRAVIS", unset=NA))
+if(slow.tests) { print("Slow tests for batchLearn."); } else
+               { print("Fast tests for batchLearn."); }
 
 .check <- function(result) {
   expect_true(!(is.null(result)));
@@ -208,10 +210,12 @@ test_that("Test regressoR.batchLearn II", {
 
 test_that("Test regressoR.batchLearn III", {
   if(slow.tests) { .do.test(cores=3L); }
+  else { expect_true(TRUE); }
 })
 
 test_that("Test regressoR.batchLearn IIII", {
   if(slow.tests) { .do.test(cores=4L); }
+  else { expect_true(TRUE); }
 })
 
 
